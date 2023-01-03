@@ -50,33 +50,20 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-11 col-lg-9 col-xl-8">
-                    
+                    {% for post in posts %}
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="posts\post_iac_kick_off___049054055050055053055051055052046053056048049050055.html">
-                            <h2 class="post-title">Iac kick off</h2>
-                            <h3 class="post-subtitle">How to start with iac</h3>
+                        <a href="{{post.link}}">
+                            <h2 class="post-title">{{post.title}}</h2>
+                            <h3 class="post-subtitle">{{post.subtitle}}</h3>
                         </a>
                         <p class="post-meta">
-                            Posted on January 03, 2023
+                            Posted on {{post.formatted_publish_date}}
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
-                    
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="posts\post_title___049054055050055053055048049048046057055055048054050.html">
-                            <h2 class="post-title">Title</h2>
-                            <h3 class="post-subtitle">Subtitle</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted on January 03, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    
+                    {% endfor %}
                     
                     <!-- Pager-->
                     <!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div> -->
