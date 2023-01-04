@@ -78,28 +78,30 @@ def publish_blog_post(filename):
         print(f"Error: Blog post '{filename}' is not in the correct folder!")
         exit()
 
+    exists = False
     start_name = os.path.splitext(os.path.basename(filename))[0]
     for f in os.listdir(os.path.join(os.path.dirname(__file__), POSTS_PUBLISH_FOLDER)):
         if f.startswith(start_name):
-            print(f"Error: A blog with the same title already exists for {filename}")
-            exit()
+            print(f"A blog with the same title already exists for {filename}. Just regenerating the index file.")
+            exists = True
     
-    environment = Environment(loader=FileSystemLoader(post_folder))
-    template = environment.get_template(os.path.basename(filename))
+    if not exists:       
+        environment = Environment(loader=FileSystemLoader(post_folder))
+        template = environment.get_template(os.path.basename(filename))
 
-    current_datetime = datetime.now()
-    current_year = current_datetime.strftime("%Y")
-    post_date = current_datetime.strftime("%B %d, %Y")
+        current_datetime = datetime.now()
+        current_year = current_datetime.strftime("%Y")
+        post_date = current_datetime.strftime("%B %d, %Y")
 
-    content = template.render(postdate = post_date, year = current_year)
+        content = template.render(postdate = post_date, year = current_year)
 
-    short_file_name = os.path.splitext(os.path.split(filename)[1])
-    short_file_name = "%s___%s%s" % (short_file_name[0], encode_string(str(current_datetime.timestamp())), short_file_name[1])
-    output_filename = os.path.join(os.path.dirname(__file__), POSTS_PUBLISH_FOLDER, short_file_name)
+        short_file_name = os.path.splitext(os.path.split(filename)[1])
+        short_file_name = "%s___%s%s" % (short_file_name[0], encode_string(str(current_datetime.timestamp())), short_file_name[1])
+        output_filename = os.path.join(os.path.dirname(__file__), POSTS_PUBLISH_FOLDER, short_file_name)
 
-    with open(output_filename, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        print(f"The blog post is available at {output_filename}")
+        with open(output_filename, mode="w", encoding="utf-8") as message:
+            message.write(content)
+            print(f"The blog post is available at {output_filename}")
 
     # Generate the index file
 
